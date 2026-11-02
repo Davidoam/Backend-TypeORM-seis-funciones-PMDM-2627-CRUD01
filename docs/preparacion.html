@@ -22,7 +22,7 @@
 </nav>
 <section class="panel active" id="postgres" role="tabpanel">
 <h2>Inicia PostgreSQL y comprueba la base</h2>
-<ol><li>Inicia el servicio PostgreSQL desde Servicios de Windows.</li><li>Abre Git Bash y conecta como <code>postgres</code>. En los equipos de clase: contraseña <code>123456</code>, host <code>localhost</code>, puerto <code>5432</code>.</li><li>Si aún no existe la base, créala una sola vez. Si ya existe, salta el comando de creación.</li></ol>
+<ol><li>Inicia el servicio PostgreSQL desde Servicios de Windows.</li><li>Abre Git Bash y conecta como <code>postgres</code>. En los equipos de clase: contraseña <code>123456</code>, host <code>localhost</code>, puerto <code>5432</code>. La plantilla del backend ya contiene estos mismos valores.</li><li>Si aún no existe la base, créala una sola vez. Si ya existe, salta el comando de creación.</li></ol>
 <pre><code>psql -h localhost -p 5432 -U postgres -d postgres -W
 CREATE DATABASE control_databridge;
 \q</code></pre>
@@ -38,7 +38,7 @@ git clone https://github.com/albertohdezakkari/typeorm-base.git
 cd typeorm-base
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env</code></pre>
-<p>Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
+<p>Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. La copia ya deja configurado el backend para el aula: <code>postgres</code>, <code>123456</code>, <code>localhost:5432</code> y <code>control_databridge</code>. Si PostgreSQL tiene otra contraseña, cambia solo <code>DB_PASSWORD</code> en <code>backend/.env</code> y usa esa misma contraseña al conectar con <code>psql</code>. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
 <p>En un móvil, <code>localhost</code> apunta al propio móvil. Para abrir la API desde el móvil, la URL del frontend debe usar la IP local del ordenador y ambos equipos deben estar en la misma LAN.</p>
 </section>
 <section class="panel" id="backend" role="tabpanel">
