@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>typeorm-base · Preparar el equipo</title>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#183a32;background:#f3f5ed;--green:#204e43;--line:#cbd8cb}*{box-sizing:border-box}body{margin:0}header{background:var(--green);color:#fff;padding:18px clamp(16px,4vw,40px)}header strong{font-size:18px}main{max-width:1050px;margin:auto;padding:20px clamp(14px,3vw,32px)}h1{font-size:clamp(24px,3vw,34px);margin:7px 0}h2{font-size:22px;margin:0 0 12px}.lead{color:#4b665b;line-height:1.5}.tabs{display:flex;gap:8px;overflow:auto;padding:10px 0 14px;position:sticky;top:0;background:#f3f5ed;z-index:2}.tabs button{font:inherit;font-weight:650;color:var(--green);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;white-space:nowrap;cursor:pointer}.tabs button[aria-selected=true]{background:var(--green);color:#fff}.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(16px,2vw,24px);max-height:68vh;overflow:auto;line-height:1.6}.panel.active{display:block}pre{background:#122d28;color:#eff5df;padding:14px;border-radius:8px;overflow:auto;white-space:pre}.note{background:#eef4e8;border-left:4px solid #4f8062;padding:11px 14px;border-radius:6px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.step{color:#577064;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}li{margin:6px 0}a{color:#145b46}.foot{font-size:12px;color:#667b70;margin-top:14px}@media(max-width:600px){.panel{max-height:none}}
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#183a32;background:#f3f5ed;--green:#204e43;--line:#cbd8cb}*{box-sizing:border-box}body{margin:0}header{background:var(--green);color:#fff;padding:18px clamp(16px,4vw,40px)}header strong{font-size:18px}main{max-width:1050px;margin:auto;padding:20px clamp(14px,3vw,32px)}h1{font-size:clamp(24px,3vw,34px);margin:7px 0}h2{font-size:22px;margin:0 0 12px}.lead{color:#4b665b;line-height:1.5}.tabs{display:flex;gap:8px;overflow:auto;padding:10px 0 14px;position:sticky;top:0;background:#f3f5ed;z-index:2}.tabs button{font:inherit;font-weight:650;color:var(--green);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;white-space:nowrap;cursor:pointer}.tabs button[aria-selected=true]{background:var(--green);color:#fff}.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(16px,2vw,24px);max-height:68vh;overflow:auto;line-height:1.6}.panel.active{display:block}pre{background:#122d28;color:#eff5df;padding:14px;border-radius:8px;overflow:auto;white-space:pre}.note{background:#eef4e8;border-left:4px solid #4f8062;padding:11px 14px;border-radius:6px}.explain{background:#f7f8f2;border:1px solid var(--line);padding:12px 14px;border-radius:8px;margin:12px 0}.explain strong{color:var(--green)}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.step{color:#577064;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}li{margin:6px 0}a{color:#145b46}.foot{font-size:12px;color:#667b70;margin-top:14px}@media(max-width:600px){.panel{max-height:none}}
 </style>
 </head>
 <body>
@@ -12,7 +12,7 @@
 <main>
 <p class="step">Antes de clase · Git Bash · Windows</p>
 <h1>Deja el proyecto listo antes de desconectar Internet</h1>
-<p class="lead">Sigue las pestañas en orden. Usa una terminal Git Bash para cada proceso. El backend y Expo se preparan con Internet; PostgreSQL seguirá funcionando localmente cuando no haya conexión.</p>
+<p class="lead">Sigue las pestañas en orden. Dejaremos tres piezas comunicadas: PostgreSQL guarda los datos, NestJS permite consultarlos y Expo muestra la pantalla. Git Bash es la terminal donde escribiremos comandos. Descargaremos las herramientas antes de trabajar sin Internet.</p>
 <nav class="tabs" role="tablist" aria-label="Pasos de preparación">
 <button role="tab" aria-selected="true" aria-controls="postgres" data-tab="postgres">1 · PostgreSQL</button>
 <button role="tab" aria-selected="false" aria-controls="clone" data-tab="clone">2 · Clonar y configurar</button>
@@ -21,55 +21,55 @@
 <button role="tab" aria-selected="false" aria-controls="offline" data-tab="offline">5 · Ensayo offline</button>
 </nav>
 <section class="panel active" id="postgres" role="tabpanel">
-<h2>Inicia PostgreSQL y comprueba la base</h2>
-<ol><li>Inicia el servicio PostgreSQL desde Servicios de Windows.</li><li>Abre Git Bash y conecta como <code>postgres</code>. En los equipos de clase: contraseña <code>123456</code>, host <code>localhost</code>, puerto <code>5432</code>. La plantilla del backend ya contiene estos mismos valores.</li><li>Si aún no existe la base, créala una sola vez. Si ya existe, salta el comando de creación.</li></ol>
-<pre><code>psql -h localhost -p 5432 -U postgres -d postgres -W
+<h2>Inicia PostgreSQL y comprueba la base</h2><p class="explain"><strong>PostgreSQL</strong> es el programa que guarda los datos. Debe estar iniciado antes de conectar la aplicación. <strong>Git Bash</strong> es la ventana de comandos que usaremos en Windows.</p>
+<ol><li>Inicia el servicio PostgreSQL desde Servicios de Windows.</li><li>Abre Git Bash y conecta como <code>postgres</code>. En clase usamos contraseña <code>123456</code>, host <code>localhost</code> (este ordenador) y puerto <code>5432</code>. La plantilla del backend ya tiene esos valores.</li><li>Si aún no existe la base, créala una sola vez. Si ya existe, salta el comando de creación.</li></ol>
+<p>El primer comando abre la consola de PostgreSQL. <code>-h</code> indica el ordenador, <code>-p</code> el puerto, <code>-U</code> el usuario, <code>-d</code> la base y <code>-W</code> pide la contraseña. Al escribirla no verás caracteres; es normal. Cuando aparezca la consola de <code>psql</code>, escribe el SQL:</p><pre><code>psql -h localhost -p 5432 -U postgres -d postgres -W
 CREATE DATABASE control_databridge;
-\q</code></pre>
-<p>Comprueba la conexión a la base de práctica:</p>
+\q</code></pre><p><code>CREATE DATABASE</code> crea la base para la práctica. <code>\q</code> sale de <code>psql</code>. Si la base ya existe, no repitas la creación.</p>
+<p>Comprueba la conexión a la base. <code>SELECT current_database()</code> pregunta a PostgreSQL qué base está abierta; esperamos <code>control_databridge</code>.</p>
 <pre><code>psql -h localhost -p 5432 -U postgres -d control_databridge -W -c "SELECT current_database();"</code></pre>
 <p class="note">La contraseña se establece también en PostgreSQL al instalarlo. Escribirla en <code>.env</code> no cambia la contraseña del servidor.</p>
 </section>
 <section class="panel" id="clone" role="tabpanel">
-<h2>Clona la misma base común</h2>
-<p>Comprueba Node.js 22 y clona el repositorio en tu carpeta de usuario:</p>
+<h2>Clona la misma base común</h2><p class="explain"><strong>Clonar</strong> es descargar una copia del proyecto desde GitHub. <strong>Node.js</strong> permite ejecutar las herramientas de JavaScript que usan NestJS y Expo.</p>
+<p>Comprueba que Node.js funciona. Después descarga el proyecto y crea tus archivos de configuración a partir de las plantillas:</p>
 <pre><code>node --version
 git clone https://github.com/albertohdezakkari/typeorm-base.git
 cd typeorm-base
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env</code></pre>
-<p>Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. La copia ya deja configurado el backend para el aula: <code>postgres</code>, <code>123456</code>, <code>localhost:5432</code> y <code>control_databridge</code>. Si PostgreSQL tiene otra contraseña, cambia solo <code>DB_PASSWORD</code> en <code>backend/.env</code> y usa esa misma contraseña al conectar con <code>psql</code>. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
-<p>En un móvil, <code>localhost</code> apunta al propio móvil. Para abrir la API desde el móvil, la URL del frontend debe usar la IP local del ordenador y ambos equipos deben estar en la misma LAN.</p>
+<p><code>node --version</code> muestra la versión instalada. <code>git clone</code> descarga el proyecto, <code>cd</code> entra en su carpeta y <code>cp</code> copia una plantilla. El archivo <code>.env</code> guarda ajustes locales, incluida la contraseña. Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. La copia ya deja configurado el backend para el aula: <code>postgres</code>, <code>123456</code>, <code>localhost:5432</code> y <code>control_databridge</code>. Si PostgreSQL tiene otra contraseña, cambia solo <code>DB_PASSWORD</code> en <code>backend/.env</code> y usa esa misma contraseña al conectar con <code>psql</code>. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
+<p><strong>localhost</strong> significa “este mismo equipo”. En un móvil apunta al móvil, no al ordenador del aula. Para usar el backend desde el móvil, ambos deben estar en la misma red y el frontend debe indicar la IP del ordenador.</p>
 </section>
 <section class="panel" id="backend" role="tabpanel">
-<h2>Instala, compila y arranca NestJS</h2>
-<p>Haz la instalación con Internet disponible. Conserva el <code>package-lock.json</code>.</p>
-<pre><code>cd backend
+<h2>Instala, compila y arranca NestJS</h2><p class="explain"><strong>Backend</strong> es la parte que recibe peticiones y consulta la base. <strong>NestJS</strong> es la herramienta con que está construido.</p>
+<p>Haz la instalación con Internet. <code>package-lock.json</code> guarda las versiones exactas de las librerías para que todos instalemos las mismas.</p>
+<p><code>npm ci</code> instala las librerías que necesita el proyecto siguiendo las versiones guardadas. <code>npm run build</code> comprueba y prepara el código. <code>npm run start:dev</code> arranca el servidor para trabajar.</p><pre><code>cd backend
 npm ci --no-audit --no-fund
 npm run build
 npm run start:dev</code></pre>
-<p>Deja esta terminal abierta. Abre una segunda Git Bash desde la raíz de <code>typeorm-base</code> y comprueba la API:</p>
+<p>Deja abierta esa terminal: el servidor debe seguir funcionando. Abre otra Git Bash desde la carpeta principal del proyecto. <strong>API</strong> es la puerta para pedir datos al backend. <code>curl</code> envía una petición desde la terminal para comprobar que responde:</p>
 <pre><code>curl http://localhost:3000/salud</code></pre>
 <p>La respuesta debe indicar <code>estado: ok</code> y <code>base: control_databridge</code>. Si no conecta, revisa que PostgreSQL esté iniciado y que las credenciales del <code>.env</code> coincidan.</p>
 </section>
 <section class="panel" id="frontend" role="tabpanel">
-<h2>Instala y abre Expo Web</h2>
-<p>Con Internet disponible, instala las dependencias en la carpeta del frontend:</p>
+<h2>Instala y abre Expo Web</h2><p class="explain"><strong>Frontend</strong> es la pantalla que usa la persona. <strong>Expo</strong> permite ejecutar la aplicación React Native en el navegador durante esta práctica.</p>
+<p>Con Internet, instala las librerías necesarias para la pantalla. Mantén abierta la terminal del backend en paralelo:</p>
 <pre><code>cd frontend
 npm ci --no-audit --no-fund
 npm run web</code></pre>
-<p>Abre la dirección local que muestra Expo. La pantalla base debe consultar <code>/salud</code> y mostrar la base de datos conectada.</p>
+<p><code>npm run web</code> abre la pantalla en el navegador. Visita la dirección que muestra Expo. La pantalla consulta <code>/salud</code>, una ruta de comprobación, y debe mostrar la base conectada.</p>
 <p>Para comprobar de nuevo desde otra terminal:</p>
 <pre><code>curl http://localhost:3000/salud</code></pre>
 </section>
 <section class="panel" id="offline" role="tabpanel">
-<h2>Comprueba que el equipo ya puede trabajar offline</h2>
-<ol><li>Antes del corte, confirma que <code>npm ci</code> terminó en backend y frontend, y que ambos proyectos compilan/arrancan.</li><li>Con Internet todavía conectado, comprueba que la caché de npm permite reinstalar sin red:</li></ol>
+<h2>Comprueba que el equipo ya puede trabajar sin Internet</h2><p class="explain"><strong>Offline</strong> quiere decir sin conexión a Internet. La <strong>caché de npm</strong> es una copia temporal de las librerías descargadas; comprobaremos que están guardadas antes del corte.</p>
+<ol><li>Antes del corte, confirma que <code>npm ci</code> terminó en backend y frontend, y que ambos proyectos compilan/arrancan.</li><li>Con Internet todavía conectado, prueba la instalación sin red: así verificamos que npm ya guardó todas las librerías necesarias:</li></ol>
 <pre><code>cd backend
 npm ci --offline --no-audit --no-fund
 cd ../frontend
 npm ci --offline --no-audit --no-fund</code></pre>
-<p>Cuando terminen las dos instalaciones, corta Internet y vuelve a arrancar PostgreSQL, NestJS y Expo:</p>
+<p>Cuando ambas instalaciones acaben sin errores, corta Internet. PostgreSQL debe seguir iniciado y abre una terminal para NestJS y otra para Expo:</p>
 <pre><code># Terminal backend
 cd backend
 npm run start:dev
@@ -77,7 +77,7 @@ npm run start:dev
 # Terminal frontend
 cd frontend
 npx --no-install expo start --offline --web</code></pre>
-<p>Deja Internet desconectado y comprueba que la pantalla responde y <code>curl http://localhost:3000/salud</code> sigue mostrando <code>control_databridge</code>. Solo entonces queda preparada esa máquina.</p>
+<p>Deja Internet desconectado y comprueba que la pantalla responde. En otra terminal ejecuta <code>curl http://localhost:3000/salud</code>: debe mostrar <code>control_databridge</code>. Así verificamos que pantalla, backend y base se comunican sin Internet.</p>
 <p class="note">No ejecutes <code>npm install</code> ni instales paquetes después del corte. Si falla <code>npm ci --offline</code>, esa máquina no está preparada: reconecta Internet, resuelve la instalación y repite el ensayo.</p>
 </section>
 <p class="foot">Base común de aprendizaje. No contiene casos asignados, examen, censo de alumnado ni soluciones.</p>
