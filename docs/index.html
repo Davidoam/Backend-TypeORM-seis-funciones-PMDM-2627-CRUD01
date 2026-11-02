@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>typeorm-base · Preparar el equipo</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#183a32;background:#f3f5ed;--green:#204e43;--line:#cbd8cb}*{box-sizing:border-box}body{margin:0}header{background:var(--green);color:#fff;padding:18px clamp(16px,4vw,40px)}header strong{font-size:18px}main{max-width:1050px;margin:auto;padding:20px clamp(14px,3vw,32px)}h1{font-size:clamp(24px,3vw,34px);margin:7px 0}h2{font-size:22px;margin:0 0 12px}.lead{color:#4b665b;line-height:1.5}.tabs{display:flex;gap:8px;overflow:auto;padding:10px 0 14px;position:sticky;top:0;background:#f3f5ed;z-index:2}.tabs button{font:inherit;font-weight:650;color:var(--green);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;white-space:nowrap;cursor:pointer}.tabs button[aria-selected=true]{background:var(--green);color:#fff}.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(16px,2vw,24px);max-height:68vh;overflow:auto;line-height:1.6}.panel.active{display:block}pre{background:#122d28;color:#eff5df;padding:14px;border-radius:8px;overflow:auto;white-space:pre}.note{background:#eef4e8;border-left:4px solid #4f8062;padding:11px 14px;border-radius:6px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.step{color:#577064;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}li{margin:6px 0}a{color:#145b46}.foot{font-size:12px;color:#667b70;margin-top:14px}@media(max-width:600px){.panel{max-height:none}}
+</style>
+</head>
+<body>
+<header><strong>typeorm-base · Guía de preparación</strong></header>
+<main>
+<p class="step">Antes de clase · Git Bash · Windows</p>
+<h1>Deja el proyecto listo antes de desconectar Internet</h1>
+<p class="lead">Sigue las pestañas en orden. Usa una terminal Git Bash para cada proceso. El backend y Expo se preparan con Internet; PostgreSQL seguirá funcionando localmente cuando no haya conexión.</p>
+<nav class="tabs" role="tablist" aria-label="Pasos de preparación">
+<button role="tab" aria-selected="true" aria-controls="postgres" data-tab="postgres">1 · PostgreSQL</button>
+<button role="tab" aria-selected="false" aria-controls="clone" data-tab="clone">2 · Clonar y configurar</button>
+<button role="tab" aria-selected="false" aria-controls="backend" data-tab="backend">3 · Backend</button>
+<button role="tab" aria-selected="false" aria-controls="frontend" data-tab="frontend">4 · Frontend</button>
+<button role="tab" aria-selected="false" aria-controls="offline" data-tab="offline">5 · Ensayo offline</button>
+</nav>
+<section class="panel active" id="postgres" role="tabpanel">
+<h2>Inicia PostgreSQL y comprueba la base</h2>
+<ol><li>Inicia el servicio PostgreSQL desde Servicios de Windows.</li><li>Abre Git Bash y conecta como <code>postgres</code>. En los equipos de clase: contraseña <code>123456</code>, host <code>localhost</code>, puerto <code>5432</code>.</li><li>Si aún no existe la base, créala una sola vez. Si ya existe, salta el comando de creación.</li></ol>
+<pre><code>psql -h localhost -p 5432 -U postgres -d postgres -W
+CREATE DATABASE control_databridge;
+\q</code></pre>
+<p>Comprueba la conexión a la base de práctica:</p>
+<pre><code>psql -h localhost -p 5432 -U postgres -d control_databridge -W -c "SELECT current_database();"</code></pre>
+<p class="note">La contraseña se establece también en PostgreSQL al instalarlo. Escribirla en <code>.env</code> no cambia la contraseña del servidor.</p>
+</section>
+<section class="panel" id="clone" role="tabpanel">
+<h2>Clona la misma base común</h2>
+<p>Comprueba Node.js 22 y clona el repositorio en tu carpeta de usuario:</p>
+<pre><code>node --version
+git clone https://github.com/albertohdezakkari/typeorm-base.git
+cd typeorm-base
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env</code></pre>
+<p>Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
+<p>En un móvil, <code>localhost</code> apunta al propio móvil. Para abrir la API desde el móvil, la URL del frontend debe usar la IP local del ordenador y ambos equipos deben estar en la misma LAN.</p>
+</section>
+<section class="panel" id="backend" role="tabpanel">
+<h2>Instala, compila y arranca NestJS</h2>
+<p>Haz la instalación con Internet disponible. Conserva el <code>package-lock.json</code>.</p>
+<pre><code>cd backend
+npm ci --no-audit --no-fund
+npm run build
+npm run start:dev</code></pre>
+<p>Deja esta terminal abierta. Abre una segunda Git Bash desde la raíz de <code>typeorm-base</code> y comprueba la API:</p>
+<pre><code>curl http://localhost:3000/salud</code></pre>
+<p>La respuesta debe indicar <code>estado: ok</code> y <code>base: control_databridge</code>. Si no conecta, revisa que PostgreSQL esté iniciado y que las credenciales del <code>.env</code> coincidan.</p>
+</section>
+<section class="panel" id="frontend" role="tabpanel">
+<h2>Instala y abre Expo Web</h2>
+<p>Con Internet disponible, instala las dependencias en la carpeta del frontend:</p>
+<pre><code>cd frontend
+npm ci --no-audit --no-fund
+npm run web</code></pre>
+<p>Abre la dirección local que muestra Expo. La pantalla base debe consultar <code>/salud</code> y mostrar la base de datos conectada.</p>
+<p>Para comprobar de nuevo desde otra terminal:</p>
+<pre><code>curl http://localhost:3000/salud</code></pre>
+</section>
+<section class="panel" id="offline" role="tabpanel">
+<h2>Comprueba que el equipo ya puede trabajar offline</h2>
+<ol><li>Antes del corte, confirma que <code>npm ci</code> terminó en backend y frontend, y que ambos proyectos compilan/arrancan.</li><li>Con Internet todavía conectado, comprueba que la caché de npm permite reinstalar sin red:</li></ol>
+<pre><code>cd backend
+npm ci --offline --no-audit --no-fund
+cd ../frontend
+npm ci --offline --no-audit --no-fund</code></pre>
+<p>Cuando terminen las dos instalaciones, corta Internet y vuelve a arrancar PostgreSQL, NestJS y Expo:</p>
+<pre><code># Terminal backend
+cd backend
+npm run start:dev
+
+# Terminal frontend
+cd frontend
+npx --no-install expo start --offline --web</code></pre>
+<p>Deja Internet desconectado y comprueba que la pantalla responde y <code>curl http://localhost:3000/salud</code> sigue mostrando <code>control_databridge</code>. Solo entonces queda preparada esa máquina.</p>
+<p class="note">No ejecutes <code>npm install</code> ni instales paquetes después del corte. Si falla <code>npm ci --offline</code>, esa máquina no está preparada: reconecta Internet, resuelve la instalación y repite el ensayo.</p>
+</section>
+<p class="foot">Base común de aprendizaje. No contiene casos asignados, examen, censo de alumnado ni soluciones.</p>
+</main>
+<script>
+const tabs=[...document.querySelectorAll('[role=tab]')],panels=[...document.querySelectorAll('[role=tabpanel]')];
+function show(id){tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===id)));panels.forEach(p=>p.classList.toggle('active',p.id===id));}
+tabs.forEach((t,i)=>{t.addEventListener('click',()=>show(t.dataset.tab));t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;tabs[n].focus();show(tabs[n].dataset.tab);}});});
+</script>
+</body></html>
