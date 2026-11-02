@@ -32,13 +32,13 @@ export default function App() {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.card}>
-        <Text style={styles.eyebrow}>BASE COMÚN · NESTJS + TYPEORM</Text>
-        <Text style={styles.title}>Conexión local</Text>
-        <Text style={styles.copy}>Esta pantalla consulta la API, que verifica PostgreSQL.</Text>
+        <Text style={styles.eyebrow}>FRONTEND · EXPO + REACT NATIVE</Text>
+        <Text style={styles.title}>¡Hola, mundo!</Text>
+        <Text style={styles.copy}>La pantalla está funcionando y consulta el backend.</Text>
         <Text style={styles.url}>API: {API_URL}</Text>
         {loading ? <Text style={styles.status}>Comprobando…</Text> : null}
         {result ? (
-          <Text style={styles.ok}>Conectado · {result.estado} · base {result.base}</Text>
+          <Text style={styles.ok}>✓ Backend conectado · PostgreSQL · {result.base}</Text>
         ) : null}
         {error ? <Text style={styles.error}>{error}</Text> : null}
         <Pressable accessibilityRole="button" onPress={() => void comprobarApi()} style={styles.button}>

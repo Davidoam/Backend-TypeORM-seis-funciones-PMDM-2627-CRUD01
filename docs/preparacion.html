@@ -49,6 +49,7 @@ npm run start:dev</code></pre>
 <p>Deja abierta esa terminal: el servidor debe seguir funcionando. Abre otra Git Bash desde la carpeta principal del proyecto. <strong>API</strong> es la puerta para pedir datos al backend. <code>curl</code> envía una petición desde la terminal para comprobar que responde:</p>
 <pre><code>curl http://localhost:3000/salud</code></pre>
 <p>La respuesta debe indicar <code>estado: ok</code> y <code>base: control_databridge</code>. Si no conecta, revisa que PostgreSQL esté iniciado y que las credenciales del <code>.env</code> coincidan.</p>
+<p>También puedes ver el backend como una página: abre <a href="http://localhost:3000/salud/vista">http://localhost:3000/salud/vista</a>. Debe aparecer “Backend conectado” y el nombre de la base. Esa página la genera NestJS y solo aparece si el backend ha podido consultar PostgreSQL.</p>
 </section>
 <section class="panel" id="frontend" role="tabpanel">
 <h2>Instala y abre Expo Web</h2><p class="explain"><strong>Frontend</strong> es la pantalla que usa la persona. <strong>Expo</strong> permite ejecutar la aplicación React Native en el navegador durante esta práctica.</p>
@@ -56,7 +57,7 @@ npm run start:dev</code></pre>
 <pre><code>cd frontend
 npm ci --no-audit --no-fund
 npm run web</code></pre>
-<p><code>npm run web</code> abre la pantalla en el navegador. Visita la dirección que muestra Expo. La pantalla consulta <code>/salud</code>, una ruta de comprobación, y debe mostrar la base conectada.</p>
+<p><code>npm run web</code> abre la pantalla en el navegador. Visita la dirección que muestra Expo. Debes ver “¡Hola, mundo!” y “Backend conectado” con el nombre de la base. Esa respuesta confirma el recorrido completo: la pantalla pide información, NestJS la consulta a PostgreSQL y la devuelve a la pantalla.</p>
 <p>Para comprobar de nuevo desde otra terminal:</p>
 <pre><code>curl http://localhost:3000/salud</code></pre>
 </section>
@@ -75,7 +76,7 @@ npm run start:dev
 # Terminal frontend
 cd frontend
 npx --no-install expo start --offline --web</code></pre>
-<p>Deja Internet desconectado y comprueba que la pantalla responde. En otra terminal ejecuta <code>curl http://localhost:3000/salud</code>: debe mostrar <code>control_databridge</code>. Así verificamos que pantalla, backend y base se comunican sin Internet.</p>
+<p>Deja Internet desconectado y abre las dos páginas locales: <a href="http://localhost:3000/salud/vista">vista del backend</a> y la dirección de Expo que muestra “¡Hola, mundo!”. En otra terminal ejecuta <code>curl http://localhost:3000/salud</code>: debe mostrar <code>control_databridge</code>. Así comprobamos visualmente y con una petición que pantalla, backend y base se comunican sin Internet.</p>
 <p class="note"><code>npm install</code> puede cambiar las versiones registradas en el archivo de bloqueo; por eso no lo ejecutes ni instales paquetes después del corte. Si falla <code>npm ci --offline</code>, esa máquina no está preparada: reconecta Internet, resuelve la instalación y repite el ensayo.</p>
 </section>
 <p class="foot">Base común de aprendizaje. No contiene casos asignados, examen, censo de alumnado ni soluciones.</p>
