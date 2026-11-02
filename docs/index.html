@@ -14,13 +14,13 @@
 <h1>Deja el proyecto listo antes de desconectar Internet</h1>
 <p class="lead">Sigue las pestañas en orden. Dejaremos tres piezas comunicadas: PostgreSQL guarda los datos, NestJS permite consultarlos y Expo muestra la pantalla. Git Bash es la terminal donde escribiremos comandos. Descargaremos las herramientas antes de trabajar sin Internet.</p>
 <p class="note"><strong>Siguiente práctica:</strong> <a href="relacion-1n.html">animación guiada de una relación 1:N, del diagrama a las Entities en diez pasos</a>.</p>
-<nav class="tabs" role="tablist" aria-label="Pasos de preparación">
+<nav class="tabs" role="tablist" aria-label="Pasos de preparación y guion de clase">
 <button role="tab" aria-selected="true" aria-controls="postgres" data-tab="postgres">1 · PostgreSQL</button>
 <button role="tab" aria-selected="false" aria-controls="clone" data-tab="clone">2 · Clonar y configurar</button>
 <button role="tab" aria-selected="false" aria-controls="backend" data-tab="backend">3 · Backend</button>
 <button role="tab" aria-selected="false" aria-controls="frontend" data-tab="frontend">4 · Frontend</button>
 <button role="tab" aria-selected="false" aria-controls="offline" data-tab="offline">5 · Ensayo offline</button>
-<button role="tab" aria-selected="false" aria-controls="demo" data-tab="demo">6 · Demo visual</button>
+<button role="tab" aria-selected="false" aria-controls="demo" data-tab="demo">6 · Demo visual</button><button role="tab" aria-selected="false" aria-controls="guion" data-tab="guion">7 · Guion de clase</button>
 </nav>
 <section class="panel active" id="postgres" role="tabpanel">
 <h2>Inicia PostgreSQL y comprueba la base</h2><p class="explain"><strong>PostgreSQL</strong> es el programa que guarda los datos. Debe estar iniciado antes de conectar la aplicación. <strong>Git Bash</strong> es la ventana de comandos que usaremos en Windows.</p>
@@ -89,6 +89,18 @@ npx --no-install expo start --offline --web</code></pre>
 <article class="demo-card"><h3>BACKEND · NestJS + TypeORM</h3><div class="backend-preview"><div class="terminal-bar">Git Bash · proceso del backend</div><div>[Nest] Nest application successfully started</div><div>[Nest] Mapped {<span class="terminal-green">/salud</span>, GET} route</div><div class="terminal-green">[TypeORM] PostgreSQL conectado</div><div class="backend-result"><strong>✓ Backend conectado</strong><br>Base de datos: control_databridge<br>La API responde con estado: ok</div></div></article>
 </div>
 <p class="demo-help">El recorrido que acabas de configurar es: frontend → backend → PostgreSQL. La vista es una referencia visual del resultado final; verifica la ejecución real con los comandos y comprobaciones de las pestañas anteriores.</p>
+</section>
+<section class="panel" id="guion" role="tabpanel">
+<h2>Guion de clase · primero la base común, después tu espacio</h2>
+<p class="explain"><strong>Meta:</strong> toda la clase parte de la misma carpeta <code>typeorm-base</code>. Primero dejamos PostgreSQL, backend y frontend funcionando en cada ordenador. Después cada alumno abre el espacio de aula, selecciona su correo institucional y trabaja con el caso que tiene asignado. En esta actividad, «entorno virtual» significa ese espacio web personalizado; no es un entorno virtual de Python.</p>
+<p>Usa las pestañas 1–6 para los comandos y las explicaciones completas. En esta pestaña tienes el orden para dirigir la sesión y decidir cuándo avanzar.</p>
+<div class="explain"><strong>0–5 min · Ubicar el proyecto</strong><p>Di: «Todos empezamos con la misma base. Abrid Git Bash en la carpeta <code>typeorm-base</code>; dentro distinguimos <code>backend</code> y <code>frontend</code>». Señala el árbol de archivos y confirma que nadie está ejecutando comandos desde una carpeta distinta.</p><p><strong>Comprobación:</strong> en la terminal, <code>pwd</code> muestra la ruta actual y <code>ls</code> permite ver las carpetas del proyecto.</p></div>
+<div class="explain"><strong>5–13 min · Conectar PostgreSQL</strong><p>Di: «Primero encendemos el servicio. La aplicación no puede consultar una base de datos que no está arrancada». Sigue la pestaña <em>1 · PostgreSQL</em> y comprueba la conexión a <code>control_databridge</code>.</p><p><strong>Comprobación antes de avanzar:</strong> <code>psql</code> conecta y <code>SELECT current_database();</code> devuelve <code>control_databridge</code>.</p></div>
+<div class="explain"><strong>13–27 min · Arrancar el backend</strong><p>Sigue <em>2 · Clonar y configurar</em> si falta la copia local; luego abre <em>3 · Backend</em>. Explica que el backend es el programa NestJS que recibe peticiones y consulta PostgreSQL. Deja su terminal abierta.</p><p><strong>Comprobación:</strong> <code>npm run build</code> termina sin errores; <code>curl http://localhost:3000/salud</code> responde con el estado correcto y la base esperada. Muestra también <code>http://localhost:3000/salud/vista</code>.</p></div>
+<div class="explain"><strong>27–38 min · Ver la pantalla</strong><p>Abre <em>4 · Frontend</em> y ejecuta Expo Web en otra terminal. Explica que frontend es la pantalla; backend es quien consulta la base. Mantén ambos procesos abiertos.</p><p><strong>Comprobación:</strong> el navegador muestra «¡Hola, mundo!» y el estado de conexión. Repite el <code>curl</code> para que vean la respuesta del backend.</p></div>
+<div class="explain"><strong>38–43 min · Ensayo completo</strong><p>Recorre <em>6 · Demo visual</em> y pide que cada alumno señale el flujo: pantalla → API NestJS → PostgreSQL → respuesta a la pantalla. Si una parte falla, detén la transición y vuelve a su pestaña de preparación para corregirla.</p><p><strong>Regla para avanzar:</strong> cada ordenador debe mostrar la pantalla y responder al <code>curl</code>. La instalación offline se ensaya en <em>5 · Ensayo offline</em> antes de desconectar Internet.</p></div>
+<div class="explain"><strong>43–50 min · Pasar al espacio personal</strong><p>Di: «La base que acabamos de arrancar es el punto de partida común. Ahora abrid el enlace del portal de aula, seleccionad vuestro correo institucional y comprobad que aparece vuestro caso asignado. Yo explicaré Cine → Proyección; vosotros seguiréis la misma secuencia con vuestro contexto».</p><p><strong>Comprobación:</strong> cada alumno identifica sus dos Entities, la cardinalidad 1:N y la carpeta donde empezará. A continuación, abre la <a href="relacion-1n.html">animación común de diez pasos</a> y avanza el primer paso junto con el profesor.</p></div>
+<p class="note"><strong>Antes de terminar:</strong> deja backend, frontend y PostgreSQL activos si continuaréis inmediatamente con la práctica. No desconectes Internet hasta confirmar las dependencias en la pestaña de ensayo offline.</p>
 </section>
 <p class="foot">Base común de aprendizaje. No contiene casos asignados, examen, censo de alumnado ni soluciones.</p>
 </main>
