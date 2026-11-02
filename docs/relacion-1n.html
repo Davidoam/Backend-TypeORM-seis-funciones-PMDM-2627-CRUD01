@@ -14,22 +14,29 @@
 <h1>Del dibujo entidad–relación a las Entities</h1>
 <p class="lead">Usaremos Cine → Proyección como ejemplo común. El diagrama queda a la vista mientras descubrimos la traducción. Avanza con «Siguiente»: el SQL y el código aparecen letra a letra, en diez pasos. El botón nunca avanza por su cuenta.</p>
 <p class="note"><strong>Convención de nombres:</strong> tablas en singular y MAYÚSCULAS: <code>CINE</code>, <code>PROYECCION</code>, <code>CATEGORIA</code>. Columnas: <code>ID</code>, <code>NOMBRE</code>, <code>PELICULA</code>, <code>ID_CINE</code> o <code>ID_CATEGORIA</code>. PostgreSQL convierte identificadores sin comillas a minúsculas; por eso el SQL usa comillas dobles para conservar estas mayúsculas. En TypeScript mantenemos nombres <code>camelCase</code>.</p>
-<details class="project-map"><summary>Antes de empezar · abre la carpeta raíz <code>typeorm-base</code> y localiza estos archivos</summary><div class="tree-grid"><pre><code>typeorm-base/
+<details class="project-map"><summary>Antes de empezar · crea la estructura desde la raíz <code>typeorm-base</code></summary><div class="tree-grid"><div><p><strong>1 · Comprueba la carpeta actual.</strong> Abre Git Bash desde la carpeta raíz del proyecto. <code>pwd</code> muestra la ruta; debe terminar en <code>/typeorm-base</code>. Estos comandos son de Git Bash, no de <code>psql</code>. Si ves el indicador <code>postgres=#</code>, escribe <code>\q</code> para volver a Git Bash.</p><pre><code>pwd
+mkdir -p backend/src/cine/entities backend/src/proyeccion/entities
+touch backend/src/cine/cine.module.ts \
+  backend/src/cine/entities/cine.entity.ts \
+  backend/src/proyeccion/proyeccion.module.ts \
+  backend/src/proyeccion/proyeccion.controller.ts \
+  backend/src/proyeccion/proyeccion.service.ts \
+  backend/src/proyeccion/entities/proyeccion.entity.ts</code></pre><p><code>mkdir -p</code> crea las carpetas y las intermedias; se puede repetir sin error. <code>touch</code> crea los archivos vacíos sin borrar el contenido si ya existen. La barra invertida <code>\</code> permite continuar el comando en la línea siguiente.</p><p><strong>No crees de nuevo</strong> <code>backend/src/app.module.ts</code> ni <code>frontend/App.tsx</code>: ya vienen en el proyecto base. Cuando termines, comprueba el árbol:</p><pre><code>find backend/src -maxdepth 4 -print</code></pre></div><div><pre><code>typeorm-base/
 ├── backend/
 │   └── src/
-│       ├── app.module.ts
+│       ├── app.module.ts             (ya existe)
 │       ├── cine/
-│       │   ├── cine.module.ts
+│       │   ├── cine.module.ts        (crear)
 │       │   └── entities/
-│       │       └── cine.entity.ts
+│       │       └── cine.entity.ts    (crear)
 │       └── proyeccion/
-│           ├── proyeccion.module.ts
-│           ├── proyeccion.controller.ts
-│           ├── proyeccion.service.ts
+│           ├── proyeccion.module.ts  (crear)
+│           ├── proyeccion.controller.ts (crear)
+│           ├── proyeccion.service.ts (crear)
 │           └── entities/
-│               └── proyeccion.entity.ts
+│               └── proyeccion.entity.ts (crear)
 └── frontend/
-    └── App.tsx</code></pre><p><strong>Ruta de trabajo:</strong> crea las carpetas que falten dentro de <code>backend/src</code>. Las Entities van dentro de <code>entities/</code>. La pantalla ya está en <code>frontend/App.tsx</code>. En esta práctica, el Service usa el Repository de TypeORM.</p></div></details>
+    └── App.tsx                       (ya existe)</code></pre><p>Las Entities describen las tablas. El módulo registra la Entity; el Service usa el Repository de TypeORM; el Controller expone la ruta. La pantalla se trabaja en <code>frontend/App.tsx</code>.</p></div></div></details>
 <div class="flow">
 <article class="card diagram active" id="diagram-card"><h3>Regla lógica · ER 1:N</h3><div class="diagram-inner"><div class="er" id="er"></div></div><div class="diagram-caption">PK identifica una fila. FK guarda el ID del principal en la tabla dependiente. La FK vive en el lado N.</div></article>
 <div class="arrow" id="arrow">➜</div>
