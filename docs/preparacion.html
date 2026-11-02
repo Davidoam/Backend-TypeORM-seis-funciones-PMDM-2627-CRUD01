@@ -23,11 +23,9 @@
 <section class="panel active" id="postgres" role="tabpanel">
 <h2>Inicia PostgreSQL y comprueba la base</h2><p class="explain"><strong>PostgreSQL</strong> es el programa que guarda los datos. Debe estar iniciado antes de conectar la aplicación. <strong>Git Bash</strong> es la ventana de comandos que usaremos en Windows.</p>
 <ol><li>Inicia el servicio PostgreSQL desde Servicios de Windows.</li><li>Abre Git Bash y conecta como <code>postgres</code>. En clase usamos contraseña <code>123456</code>, host <code>localhost</code> (este ordenador) y puerto <code>5432</code>. La plantilla del backend ya tiene esos valores.</li><li>Si aún no existe la base, créala una sola vez. Si ya existe, salta el comando de creación.</li></ol>
-<p>El primer comando abre la consola de PostgreSQL. <code>-h</code> indica el ordenador, <code>-p</code> el puerto, <code>-U</code> el usuario, <code>-d</code> la base y <code>-W</code> pide la contraseña. Al escribirla no verás caracteres; es normal. Cuando aparezca la consola de <code>psql</code>, escribe el SQL:</p><pre><code>psql -h localhost -p 5432 -U postgres -d postgres -W
-CREATE DATABASE control_databridge;
-\q</code></pre><p><code>CREATE DATABASE</code> crea la base para la práctica. <code>\q</code> sale de <code>psql</code>. Si la base ya existe, no repitas la creación.</p>
+<p>Primero, desde Git Bash, abre <code>psql</code>, la consola para hablar con PostgreSQL. En este comando, <code>-h localhost</code> conecta con este ordenador; <code>-p 5432</code> usa el puerto de PostgreSQL; <code>-U postgres</code> entra con el usuario postgres; <code>-d postgres</code> abre la base administrativa llamada postgres; y <code>-W</code> hace que pida la contraseña. Al escribirla no verás caracteres: es normal.</p><pre><code>psql -h localhost -p 5432 -U postgres -d postgres -W</code></pre><p>Cuando aparezca el indicador de <code>psql</code>, ya no estás escribiendo comandos de Git Bash: escribe este SQL para crear la base de práctica:</p><pre><code>CREATE DATABASE control_databridge;</code></pre><p>El punto y coma indica que la instrucción SQL terminó. Después escribe <code>\q</code> para salir de <code>psql</code> y volver a Git Bash. Si la base ya existe, no repitas <code>CREATE DATABASE</code>.</p>
 <p>Comprueba la conexión a la base. <code>SELECT current_database()</code> pregunta a PostgreSQL qué base está abierta; esperamos <code>control_databridge</code>.</p>
-<pre><code>psql -h localhost -p 5432 -U postgres -d control_databridge -W -c "SELECT current_database();"</code></pre>
+<p>En esta variante, <code>-d control_databridge</code> abre directamente la base de práctica y <code>-c</code> ejecuta el SQL que va entre comillas; al terminar, <code>psql</code> vuelve a Git Bash.</p><pre><code>psql -h localhost -p 5432 -U postgres -d control_databridge -W -c "SELECT current_database();"</code></pre>
 <p class="note">La contraseña se establece también en PostgreSQL al instalarlo. Escribirla en <code>.env</code> no cambia la contraseña del servidor.</p>
 </section>
 <section class="panel" id="clone" role="tabpanel">
@@ -38,13 +36,13 @@ git clone https://github.com/albertohdezakkari/typeorm-base.git
 cd typeorm-base
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env</code></pre>
-<p><code>node --version</code> muestra la versión instalada. <code>git clone</code> descarga el proyecto, <code>cd</code> entra en su carpeta y <code>cp</code> copia una plantilla. El archivo <code>.env</code> guarda ajustes locales, incluida la contraseña. Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. La copia ya deja configurado el backend para el aula: <code>postgres</code>, <code>123456</code>, <code>localhost:5432</code> y <code>control_databridge</code>. Si PostgreSQL tiene otra contraseña, cambia solo <code>DB_PASSWORD</code> en <code>backend/.env</code> y usa esa misma contraseña al conectar con <code>psql</code>. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
+<p><code>node --version</code> pide a Node.js que muestre su versión; confirma que está instalado. En <code>git clone URL</code>, <code>clone</code> significa copiar el repositorio remoto de GitHub a este equipo. <code>cd</code> significa cambiar de carpeta. <code>cp origen destino</code> copia un archivo: aquí convierte cada plantilla <code>.env.example</code> en tu configuración local <code>.env</code>. El archivo <code>.env</code> guarda ajustes locales, incluida la contraseña. Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. La copia ya deja configurado el backend para el aula: <code>postgres</code>, <code>123456</code>, <code>localhost:5432</code> y <code>control_databridge</code>. Si PostgreSQL tiene otra contraseña, cambia solo <code>DB_PASSWORD</code> en <code>backend/.env</code> y usa esa misma contraseña al conectar con <code>psql</code>. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
 <p><strong>localhost</strong> significa “este mismo equipo”. En un móvil apunta al móvil, no al ordenador del aula. Para usar el backend desde el móvil, ambos deben estar en la misma red y el frontend debe indicar la IP del ordenador.</p>
 </section>
 <section class="panel" id="backend" role="tabpanel">
 <h2>Instala, compila y arranca NestJS</h2><p class="explain"><strong>Backend</strong> es la parte que recibe peticiones y consulta la base. <strong>NestJS</strong> es la herramienta con que está construido.</p>
 <p>Haz la instalación con Internet. <code>package-lock.json</code> guarda las versiones exactas de las librerías para que todos instalemos las mismas.</p>
-<p><code>npm ci</code> instala las librerías que necesita el proyecto siguiendo las versiones guardadas. <code>npm run build</code> comprueba y prepara el código. <code>npm run start:dev</code> arranca el servidor para trabajar.</p><pre><code>cd backend
+<p><code>npm ci</code> instala las librerías listadas en <code>package-lock.json</code> con esas versiones exactas. Si ya existe <code>node_modules</code>, lo reemplaza para que la instalación coincida con el archivo de bloqueo. En <code>--no-audit</code>, los guiones introducen una opción: esta desactiva el informe automático de vulnerabilidades durante esta instalación; no arregla ni comprueba vulnerabilidades. <code>--no-fund</code> oculta los avisos que invitan a financiar a quienes mantienen algunas librerías. Estas dos opciones solo silencian tareas informativas de npm; no son necesarias para instalar. <code>npm run build</code> ejecuta la compilación definida por el proyecto para detectar errores. <code>npm run start:dev</code> inicia NestJS en modo desarrollo.</p><pre><code>cd backend
 npm ci --no-audit --no-fund
 npm run build
 npm run start:dev</code></pre>
@@ -54,7 +52,7 @@ npm run start:dev</code></pre>
 </section>
 <section class="panel" id="frontend" role="tabpanel">
 <h2>Instala y abre Expo Web</h2><p class="explain"><strong>Frontend</strong> es la pantalla que usa la persona. <strong>Expo</strong> permite ejecutar la aplicación React Native en el navegador durante esta práctica.</p>
-<p>Con Internet, instala las librerías necesarias para la pantalla. Mantén abierta la terminal del backend en paralelo:</p>
+<p>Con Internet, instala las librerías del frontend; usa <code>npm ci</code> con las mismas opciones explicadas en la pestaña Backend. Mantén abierta la terminal del backend en paralelo:</p>
 <pre><code>cd frontend
 npm ci --no-audit --no-fund
 npm run web</code></pre>
@@ -64,13 +62,13 @@ npm run web</code></pre>
 </section>
 <section class="panel" id="offline" role="tabpanel">
 <h2>Comprueba que el equipo ya puede trabajar sin Internet</h2><p class="explain"><strong>Offline</strong> quiere decir sin conexión a Internet. La <strong>caché de npm</strong> es una copia temporal de las librerías descargadas; comprobaremos que están guardadas antes del corte.</p>
-<ol><li>Antes del corte, confirma que <code>npm ci</code> terminó en backend y frontend, y que ambos proyectos compilan/arrancan.</li><li>Con Internet todavía conectado, prueba la instalación sin red: así verificamos que npm ya guardó todas las librerías necesarias:</li></ol>
+<ol><li>Antes del corte, confirma que instalaste y arrancaste backend y frontend.</li><li>Con Internet todavía conectado, prueba reinstalar usando solo la caché local de npm:</li></ol><p>En <code>npm ci --offline</code>, <code>--offline</code> prohíbe a npm conectarse a Internet y obliga a usar lo que ya descargó. Las opciones <code>--no-audit</code> y <code>--no-fund</code> tienen el mismo significado explicado antes. Si falta una librería en la caché, el comando falla: todavía no se puede cortar Internet.</p>
 <pre><code>cd backend
 npm ci --offline --no-audit --no-fund
 cd ../frontend
 npm ci --offline --no-audit --no-fund</code></pre>
 <p>Cuando ambas instalaciones acaben sin errores, corta Internet. PostgreSQL debe seguir iniciado y abre una terminal para NestJS y otra para Expo:</p>
-<pre><code># Terminal backend
+<p>En cada terminal, <code>#</code> inicia un comentario para la persona: Bash lo ignora. Desde la carpeta principal, <code>cd backend</code> entra al backend y <code>npm run start:dev</code> lo arranca. En la otra ventana, <code>cd frontend</code> entra al frontend.</p><p>En el último comando, <code>npx</code> ejecuta una herramienta instalada en el proyecto; <code>--no-install</code> le prohíbe descargarla si falta; <code>expo start</code> arranca el servidor de Expo; <code>--offline</code> evita que Expo use servicios de Internet; y <code>--web</code> prepara la versión que se ve en el navegador.</p><pre><code># Terminal backend
 cd backend
 npm run start:dev
 
@@ -78,7 +76,7 @@ npm run start:dev
 cd frontend
 npx --no-install expo start --offline --web</code></pre>
 <p>Deja Internet desconectado y comprueba que la pantalla responde. En otra terminal ejecuta <code>curl http://localhost:3000/salud</code>: debe mostrar <code>control_databridge</code>. Así verificamos que pantalla, backend y base se comunican sin Internet.</p>
-<p class="note">No ejecutes <code>npm install</code> ni instales paquetes después del corte. Si falla <code>npm ci --offline</code>, esa máquina no está preparada: reconecta Internet, resuelve la instalación y repite el ensayo.</p>
+<p class="note"><code>npm install</code> puede cambiar las versiones registradas en el archivo de bloqueo; por eso no lo ejecutes ni instales paquetes después del corte. Si falla <code>npm ci --offline</code>, esa máquina no está preparada: reconecta Internet, resuelve la instalación y repite el ensayo.</p>
 </section>
 <p class="foot">Base común de aprendizaje. No contiene casos asignados, examen, censo de alumnado ni soluciones.</p>
 </main>
