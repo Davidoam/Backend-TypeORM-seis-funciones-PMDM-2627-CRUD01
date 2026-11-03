@@ -46,7 +46,7 @@ main{background:white;padding:32px;border-radius:16px;max-width:560px;margin:20p
       port: Number(process.env.DB_PORT || 5432),
       username: process.env.DB_USER || "postgres",
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME || "control_databridge",
+      database: process.env.DB_NAME || "repaso-typescript",
       autoLoadEntities: true,
       synchronize: false,
     }),
