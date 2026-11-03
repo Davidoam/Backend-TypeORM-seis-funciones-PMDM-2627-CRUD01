@@ -27,10 +27,9 @@
 <p>Comprueba que Node.js funciona. Después descarga el proyecto y crea tus archivos de configuración a partir de las plantillas:</p>
 <pre><code>node --version
 git clone https://github.com/albertohdezakkari/typeorm-base.git
-cd typeorm-base
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env</code></pre>
-<p><code>node --version</code> pide a Node.js que muestre su versión; confirma que está instalado. En <code>git clone URL</code>, <code>clone</code> significa copiar el repositorio remoto de GitHub a este equipo. <code>cd</code> significa cambiar de carpeta. <code>cp origen destino</code> copia un archivo: aquí convierte cada plantilla <code>.env.example</code> en tu configuración local <code>.env</code>. El archivo <code>.env</code> guarda ajustes locales, incluida la contraseña. Si ya tienes <code>typeorm-base</code>, entra en esa carpeta; no vuelvas a clonarla. La copia ya deja configurado el backend para el aula: <code>postgres</code>, <code>123456</code>, <code>localhost:5432</code> y <code>control_databridge</code>. Si PostgreSQL tiene otra contraseña, cambia solo <code>DB_PASSWORD</code> en <code>backend/.env</code> y usa esa misma contraseña al conectar con <code>psql</code>. Los archivos <code>.env</code> son locales y no se suben a GitHub.</p>
+cd typeorm-base</code></pre>
+<p><code>node --version</code> muestra la versión de Node.js. <code>git clone URL</code> descarga la base común de GitHub y <code>cd typeorm-base</code> entra en la carpeta recién creada. Si ya tienes esa carpeta, no vuelvas a clonarla: entra en ella. La configuración de conexión viene preparada en el proyecto; no copies ni crees archivos <code>.env</code> durante la clase.</p>
+<div class="note"><strong>Archivos de configuración ya preparados:</strong> <code>backend/.env.example</code> contiene los valores del aula y los comandos del backend ya lo cargan. <code>AppModule</code> ya conecta <code>TypeOrmModule.forRoot()</code> con esas variables. En la clase solo revisamos host <code>localhost</code>, puerto <code>5432</code>, usuario <code>postgres</code>, contraseña del aula <code>123456</code> y base <code>control_databridge</code>. El archivo <code>.env</code> local está ignorado por Git; el alumnado no necesita generarlo.</div>
 <p><strong>localhost</strong> significa “este mismo equipo”. En un móvil apunta al móvil, no al ordenador del aula. Para usar el backend desde el móvil, ambos deben estar en la misma red y el frontend debe indicar la IP del ordenador.</p>
 </section>
 <section class="panel" id="postgres" role="tabpanel">
@@ -50,7 +49,7 @@ npm run build
 npm run start:dev</code></pre>
 <p>Deja abierta esa terminal: el servidor debe seguir funcionando. Abre otra Git Bash desde la carpeta principal del proyecto. <strong>API</strong> es la puerta para pedir datos al backend. <code>curl</code> envía una petición desde la terminal para comprobar que responde:</p>
 <pre><code>curl http://localhost:3000/salud</code></pre>
-<p>La respuesta debe indicar <code>estado: ok</code> y <code>base: control_databridge</code>. Si no conecta, revisa que PostgreSQL esté iniciado y que las credenciales del <code>.env</code> coincidan.</p>
+<p>La respuesta debe indicar <code>estado: ok</code> y <code>base: control_databridge</code>. Si no conecta, revisa que PostgreSQL esté iniciado y que su usuario y contraseña coincidan con los valores ya preparados en <code>backend/.env.example</code>. No modifiques el <code>AppModule</code>: la conexión TypeORM ya forma parte de la base común.</p>
 <p>También puedes ver el backend como una página: abre <a href="http://localhost:3000/salud/vista">http://localhost:3000/salud/vista</a>. Debe aparecer “Backend conectado” y el nombre de la base. Esa página la genera NestJS y solo aparece si el backend ha podido consultar PostgreSQL.</p>
 </section>
 <section class="panel" id="frontend" role="tabpanel">
