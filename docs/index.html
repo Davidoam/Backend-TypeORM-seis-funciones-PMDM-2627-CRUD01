@@ -45,8 +45,8 @@ ls -la backend</code></pre>
 <section class="panel" id="backend" role="tabpanel">
 <h2>Instala, compila y arranca NestJS</h2><p class="explain"><strong>Backend</strong> es la parte que recibe peticiones y consulta la base. <strong>NestJS</strong> es la herramienta con que está construido.</p>
 <p>Haz la instalación con Internet. <code>package-lock.json</code> guarda las versiones exactas de las librerías para que todos instalemos las mismas.</p>
-<p><code>npm ci</code> instala las librerías listadas en <code>package-lock.json</code> con esas versiones exactas. Si ya existe <code>node_modules</code>, lo reemplaza para que la instalación coincida con el archivo de bloqueo. En <code>--no-audit</code>, los guiones introducen una opción: esta desactiva el informe automático de vulnerabilidades durante esta instalación; no arregla ni comprueba vulnerabilidades. <code>--no-fund</code> oculta los avisos que invitan a financiar a quienes mantienen algunas librerías. Estas dos opciones solo silencian tareas informativas de npm; no son necesarias para instalar. <code>npm run build</code> ejecuta la compilación definida por el proyecto para detectar errores. <code>npm run start:dev</code> inicia NestJS en modo desarrollo.</p><pre><code>cd backend
-npm ci --no-audit --no-fund
+<p><code>npm ci</code> instala las versiones exactas fijadas en <code>package-lock.json</code>; si ya existe <code>node_modules</code>, lo reemplaza. Así todos parten de las mismas dependencias y el archivo de versiones no cambia. <code>--no-audit</code> evita que npm envíe una solicitud adicional con el informe de auditoría durante la instalación; no comprueba ni corrige vulnerabilidades. <code>--no-fund</code> solo oculta un aviso informativo de financiación; no hace falta para instalar y por eso no lo añadimos al comando. <code>npm run build</code> compila el backend y <code>npm run start:dev</code> lo inicia en modo desarrollo.</p><pre><code>cd backend
+npm ci --no-audit
 npm run build
 npm run start:dev</code></pre>
 <p>Deja abierta esa terminal: el servidor debe seguir funcionando. Abre otra Git Bash desde la carpeta principal del proyecto. <strong>API</strong> es la puerta para pedir datos al backend. <code>curl</code> envía una petición desde la terminal para comprobar que responde:</p>
@@ -58,7 +58,7 @@ npm run start:dev</code></pre>
 <h2>Instala y abre Expo Web</h2><p class="explain"><strong>Frontend</strong> es la pantalla que usa la persona. <strong>Expo</strong> permite ejecutar la aplicación React Native en el navegador durante esta práctica.</p>
 <p>Con Internet, instala las librerías del frontend; usa <code>npm ci</code> con las mismas opciones explicadas en la pestaña Backend. Mantén abierta la terminal del backend en paralelo:</p>
 <pre><code>cd frontend
-npm ci --no-audit --no-fund
+npm ci --no-audit
 npm run web</code></pre>
 <p><code>npm run web</code> abre la pantalla en el navegador. Visita la dirección que muestra Expo. Debes ver “¡Hola, mundo!” y “Backend conectado” con el nombre de la base. Esa respuesta confirma el recorrido completo: la pantalla pide información, NestJS la consulta a PostgreSQL y la devuelve a la pantalla.</p>
 <p>Para comprobar de nuevo desde otra terminal:</p>
@@ -66,11 +66,11 @@ npm run web</code></pre>
 </section>
 <section class="panel" id="offline" role="tabpanel">
 <h2>Comprueba que el equipo ya puede trabajar sin Internet</h2><p class="explain"><strong>Offline</strong> quiere decir sin conexión a Internet. La <strong>caché de npm</strong> es una copia temporal de las librerías descargadas; comprobaremos que están guardadas antes del corte.</p>
-<ol><li>Antes del corte, confirma que instalaste y arrancaste backend y frontend.</li><li>Con Internet todavía conectado, prueba reinstalar usando solo la caché local de npm:</li></ol><p>En <code>npm ci --offline</code>, <code>--offline</code> prohíbe a npm conectarse a Internet y obliga a usar lo que ya descargó. Las opciones <code>--no-audit</code> y <code>--no-fund</code> tienen el mismo significado explicado antes. Si falta una librería en la caché, el comando falla: todavía no se puede cortar Internet.</p>
+<ol><li>Antes del corte, confirma que instalaste y arrancaste backend y frontend.</li><li>Con Internet todavía conectado, prueba reinstalar usando solo la caché local de npm:</li></ol><p><code>--offline</code> prohíbe las conexiones a Internet y obliga a npm a usar las librerías ya guardadas en caché. <code>--no-audit</code> evita la solicitud de auditoría. Si falta una librería en la caché, el comando falla: todavía no se puede cortar Internet. <code>--no-fund</code> no se necesita para esta prueba.</p>
 <pre><code>cd backend
-npm ci --offline --no-audit --no-fund
+npm ci --offline --no-audit
 cd ../frontend
-npm ci --offline --no-audit --no-fund</code></pre>
+npm ci --offline --no-audit</code></pre>
 <p>Cuando ambas instalaciones acaben sin errores, corta Internet. PostgreSQL debe seguir iniciado y abre una terminal para NestJS y otra para Expo:</p>
 <p>En cada terminal, <code>#</code> inicia un comentario para la persona: Bash lo ignora. Desde la carpeta principal, <code>cd backend</code> entra al backend y <code>npm run start:dev</code> lo arranca. En la otra ventana, <code>cd frontend</code> entra al frontend.</p><p>En el último comando, <code>npx</code> ejecuta una herramienta instalada en el proyecto; <code>--no-install</code> le prohíbe descargarla si falta; <code>expo start</code> arranca el servidor de Expo; <code>--offline</code> evita que Expo use servicios de Internet; y <code>--web</code> prepara la versión que se ve en el navegador.</p><pre><code># Terminal backend
 cd backend
