@@ -27,8 +27,10 @@
 <p>Comprueba que Node.js funciona. Después descarga el proyecto y crea tus archivos de configuración a partir de las plantillas:</p>
 <pre><code>node --version
 git clone https://github.com/albertohdezakkari/typeorm-base.git
-cd typeorm-base</code></pre>
-<p><code>node --version</code> muestra la versión de Node.js. <code>git clone URL</code> descarga la base común de GitHub y <code>cd typeorm-base</code> entra en la carpeta recién creada. Si ya tienes esa carpeta, no vuelvas a clonarla: entra en ella. La configuración de conexión viene preparada en el proyecto; no copies ni crees archivos <code>.env</code> durante la clase.</p>
+cd typeorm-base
+ls -la backend</code></pre>
+<p><code>node --version</code> muestra la versión de Node.js. <code>git clone URL</code> descarga la base común de GitHub y <code>cd typeorm-base</code> entra en la carpeta recién creada. <code>ls -la backend</code> lista los archivos de backend, también los ocultos (los que empiezan por punto). Si ya tienes esa carpeta, no vuelvas a clonarla: entra en ella. La configuración de conexión viene preparada en el proyecto; no copies ni crees archivos <code>.env</code> durante la clase.</p>
+<div class="note"><strong>¿Por qué no lo veías con <code>ls</code>?</strong> Git Bash y macOS ocultan por defecto los nombres que empiezan por punto. Con <code>ls -la backend</code> aparecerá <code>.env.example</code>, que sí viene en el repositorio. El archivo literal <code>.env</code> se excluye de Git; los comandos del backend ya leen <code>.env.example</code>, así que no necesitan crear <code>.env</code>.</div>
 <div class="note"><strong>Archivos de configuración ya preparados:</strong> <code>backend/.env.example</code> contiene los valores del aula y los comandos del backend ya lo cargan. <code>AppModule</code> ya conecta <code>TypeOrmModule.forRoot()</code> con esas variables. En la clase solo revisamos host <code>localhost</code>, puerto <code>5432</code>, usuario <code>postgres</code>, contraseña del aula <code>123456</code> y base <code>control_databridge</code>. El archivo <code>.env</code> local está ignorado por Git; el alumnado no necesita generarlo.</div>
 <p><strong>localhost</strong> significa “este mismo equipo”. En un móvil apunta al móvil, no al ordenador del aula. Para usar el backend desde el móvil, ambos deben estar en la misma red y el frontend debe indicar la IP del ordenador.</p>
 </section>
